@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Game</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="container">
+
+      <div id="page active" id="first-page">
+        <h1>Quiz Time</h1>
+        <p>Test Your Knowledge With These Fun Questions</p>
+        <button id="start-btn">Start Quiz</button>
+      </div>
+
+
+      <div class="page" id="Quiz-page">
+        <h1 id="Questions">Question goes here</h1>
+        <div id="Quiz-Info">
+            <p>
+                Question <span id="current-question">1</span> of <span id="total-question">5</span>
+            </p>
+            <p>
+                Score:<span id="score">0</span>
+            </p>
+        </div>
+
+        <div id="answer-container" itemid="answer-container">
+            <!-- THE ANSWERS WILL BE CONTAINER HERE -->
+        </div>
+
+        <div id="progress-bar">
+          <div id="progress" class="progress"></div>
+        </div>
+      </div>
+
+      <div>
+        <h1>Quiz Result</h1>
+        <div class="result-info"> 
+          <p>You Score <span>1</span> Out Of <span>5</span> </p>
+          <div id="result-msg">Good Job</div>
+        </div>
+        <button id="restart-btn">Restart Quiz</button>
+      </div>
+
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
