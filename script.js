@@ -61,3 +61,51 @@ const quizQuestions = [
   },
 ];
 
+let currQuestionIndex = 0;
+let answersDisabled = false;
+score = 0;
+
+totalQuestionsSpan.textContent = quizQuestions.length;
+maxScoreSpan.textContent = quizQuestions.length;
+
+//event listener
+startButton.addEventListener("click",startQuiz);
+restartButton.addEventListener("click",restartQuiz);
+
+function startQuiz(){
+    currQuestionIndex = 0;
+    scoreSpan.textContent=0;
+    startScreen.classList.remove("active");
+    quizScreen.classList.add("active");
+
+    showQuestion();
+}
+
+function showQuestion() {
+    answersDisabled = false;
+
+    const currentQuestion = quizQuestions[currQuestionIndex];      
+    currentQuestionSpan.textContent = currQuestionIndex + 1;
+    let progressPercent = currentQuestion/totalQuestionsSpan * 100;
+    progressBar.style.width = progressPercent +"%";
+    questionText.append(currentQuestion.question);
+
+    currentQuestion.answers.forEach((answer) => {
+        const button = document.createElement("button");
+        button.textContent = answer.text;
+        button.classList.add("answer-btn");
+
+        button.dataset.correct = answer.correct;
+        // button.addEventListener("click", selectanswer);
+        answersContainer.appendChild(button);
+    }); 
+}
+
+
+
+
+function restartQuiz(){
+    resultScreen.classList.remove("active");
+    startButton.classList.add("active");
+
+}
