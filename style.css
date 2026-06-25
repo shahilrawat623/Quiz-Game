@@ -70,6 +70,8 @@ body{
 
 .answer-btn{
     color: #333;
+    background-color: #f7980a;
+    color: #eadbc8;
     border: 2px solid #eadbc8 ;
     border-radius: .3rem;
     text-align: left;
@@ -80,7 +82,8 @@ body{
 }
 
 .answer-btn:hover{
-    background-color: #eadbc8;
+    
+    background-color: #e86a33;
     border-color:#dac0ae ;
 }
 
