@@ -73,6 +73,7 @@ startButton.addEventListener("click",startQuiz);
 restartButton.addEventListener("click",restartQuiz);
 
 function startQuiz(){
+    score=0;
     currQuestionIndex = 0;
     scoreSpan.textContent=0;
     startScreen.classList.remove("active");
@@ -84,11 +85,15 @@ function startQuiz(){
 function showQuestion() {
     answersDisabled = false;
 
-    const currentQuestion = quizQuestions[currQuestionIndex];      
+    const currentQuestion = quizQuestions[currQuestionIndex];   
+       
     currentQuestionSpan.textContent = currQuestionIndex + 1;
-    let progressPercent = currentQuestion/totalQuestionsSpan * 100;
+
+    let progressPercent = currQuestionIndex/quizQuestions.length * 100;
     progressBar.style.width = progressPercent +"%";
-    questionText.append(currentQuestion.question);
+    questionText.textContent = currentQuestion.question;
+
+    answersContainer.innerHTML="";
 
     currentQuestion.answers.forEach((answer) => {
         const button = document.createElement("button");
@@ -96,9 +101,62 @@ function showQuestion() {
         button.classList.add("answer-btn");
 
         button.dataset.correct = answer.correct;
-        // button.addEventListener("click", selectanswer);
+        button.addEventListener("click", selectanswer);
         answersContainer.appendChild(button);
     }); 
+}
+
+function selectanswer(event){
+    if(answersDisabled) return;
+    answersDisabled = "true";
+
+    const selectButton = event.target;
+    const isCorrect = selectButton.dataset.correct==="true";
+
+    Array.from(answersContainer.children).forEach((button)=>{
+      if(button.dataset.correct==="true"){
+        button.classList.add("correct");
+      }else if(button === selectButton){
+        button.classList.add("incorrect");
+      }
+    })
+
+    if(isCorrect){
+      score++;
+      scoreSpan.textContent=score;
+    }
+    
+
+    setTimeout(()=>{
+      currQuestionIndex++
+      if(currQuestionIndex < quizQuestions.length){
+        showQuestion();
+      }else{
+        showResult();
+      }
+    },1000)
+
+}
+
+function showResult() {
+  quizScreen.classList.remove("active");
+  resultScreen.classList.add("active");
+
+  finalScoreSpan.textContent = score;
+
+  const percentage = (score / quizQuestions.length) * 100;
+
+  if (percentage === 100) {
+    resultMessage.textContent = "Perfect! You're a genius!";
+  } else if (percentage >= 80) {
+    resultMessage.textContent = "Great job! You know your stuff!";
+  } else if (percentage >= 60) {
+    resultMessage.textContent = "Good effort! Keep learning!";
+  } else if (percentage >= 40) {
+    resultMessage.textContent = "Not bad! Try again to improve!";
+  } else {
+    resultMessage.textContent = "Keep studying! You'll get better!";
+  }
 }
 
 
@@ -106,6 +164,5 @@ function showQuestion() {
 
 function restartQuiz(){
     resultScreen.classList.remove("active");
-    startButton.classList.add("active");
-
+    startQuiz();
 }
